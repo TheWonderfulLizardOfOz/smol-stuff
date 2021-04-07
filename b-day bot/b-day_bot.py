@@ -152,8 +152,4 @@ async def display(ctx):
             db.commit()
     
     db.close()
-
-@client.command()
-async def addrole(ctx, member : discord.Member, role : discord.Role):
-    await member.add_roles(role)
 client.run(TOKEN)
