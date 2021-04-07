@@ -12,7 +12,7 @@ TOKEN = os.getenv("DISCORD_TOKEN")
 saysomething_msg = ["I AM GOD", "This bot makes me feel very powerful",
                     "This is fun we are having fun", ":)", "Nah", "No",
                     "Nope", "Ok", "MEEP MORP I AM A ROBOT",
-                    "If this works Garance will be very happy",
+                    "If this works Garry will be very happy",
                     "I'm sorry I have nothing to say right now please come back now",
                     "I WILL NOT DO AS YOU COMMAND"]
 
@@ -53,8 +53,29 @@ async def party(ctx, arg):
         await ctx.send("Integers!")
 
 @client.command()
-async def pain(ctx):
-    while True:
-        time.sleep(15)
-        await ctx.send("15 seconds have passed")
+
+async def pain(ctx, arg1, arg2 = None):
+    try:
+        arg1 = float(arg1)
+        valid_arg1 = True
+    except ValueError:
+        valid_arg1 = False
+
+    try:
+        if arg2 == None:
+            raise ValueError
+        arg2 = int(arg2)
+        valid_arg2 = True
+    except ValueError:
+        valid_arg2 = False
+
+    if valid_arg1 == True and valid_arg2 == False:
+        while True:
+            time.sleep(arg1)
+            await ctx.send("{} seconds passed.".format(arg1))
+    elif valid_arg1 == True and valid_arg2 == True:
+        for i in range(arg2):
+            await ctx.send("{} seconds passed.".format(arg1))
+    else:
+        await ctx.send("Please input as %pain 'float' 'integer'")
 client.run(TOKEN)
