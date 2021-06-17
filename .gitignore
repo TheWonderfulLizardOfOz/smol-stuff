@@ -174,3 +174,6 @@ $RECYCLE.BIN/
 
 # Discord tokens
 *.env
+
+#Databases
+*.db

@@ -122,34 +122,20 @@ async def display(ctx):
 
     server_id = ctx.message.guild.id
 
-    cursor.execute("""SELECT user_id FROM Servers WHERE Servers.server_id = ?""",
+    cursor.execute("""SELECT Servers.user_id, Dates.date FROM Servers JOIN Dates ON Servers.user_id = Dates.user_id
+                    WHERE Servers.server_id = ?""",
                    [server_id])
-    user_ids = cursor.fetchall()
+    results = cursor.fetchall()
     db.commit()
-    
-    for u_id in user_ids:
-        u_in_server = False
+    for result in results:
+        user_id = result[0]
+        date = result[1]
         for member in client.get_all_members():
-            print(member.id)
-            print(member.name)
-            if u_id[0] == member.id:
-                u_in_server = True
+            if user_id == member.id:
                 name = member.name
-                nick = member.nick
-                if nick == None:
-                    nick = member.name
-                break
-        print(u_in_server)
-        if u_in_server == True:
-            user_id = u_id[0]
-            cursor.execute("""SELECT date FROM Dates WHERE Dates.user_id = ?""",
-                           [user_id])
-            d = cursor.fetchall()
-            date = str(d[0][0])
-            user_id = await client.fetch_user(user_id)
-            output = str(nick) + ": " + str(date)
-            await ctx.send(output)
-            db.commit()
-    
+                if member.nick != None:
+                    name = member.nick
+                output = str(name) + ": " + str(date)
+                await ctx.send(output)
     db.close()
 client.run(TOKEN)
