@@ -64,7 +64,6 @@ def playerWin(computerCard):
         playerCards.append(card)
     for i in range(len(drawPile)):
         drawPile.pop(0)
-        print("Computer chooses: {}".format(stat))
 
 def computerWin(playerCard):
     computerCards.append(computerCards.pop(0))
@@ -94,7 +93,7 @@ def checkWin():
     else:
         return False
 
-def outPutCard():
+def outputCard():
     cardName = playerCards[0]
     cardDetails = cardDict[cardName]
     print("Card Name: {}\nAttack: {}\nDefense: {}\n".format(cardName, cardDetails["Attack"], cardDetails["Defense"]))
@@ -109,7 +108,7 @@ while checkWin() == False:
     print("Remaining cards: {}".format(len(playerCards)))
     playerCard = playerCards[0]
     computerCard = computerCards[0]
-    outPutCard()
+    outputCard()
     if currentTurn == "player":
         stat = playerSelect()
     else:
